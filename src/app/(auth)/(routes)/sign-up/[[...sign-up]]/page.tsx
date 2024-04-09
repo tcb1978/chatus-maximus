@@ -1,12 +1,12 @@
 import type { FC } from 'react';
-import { SignIn } from '@clerk/nextjs';
+import { SignUp } from '@clerk/nextjs';
 
 interface SignupProps {
 
 }
 
 const Signup: FC<SignupProps> = ({ }) => {
-  return (<SignIn />);
+  return (<SignUp />);
 };
 
 export default Signup;
