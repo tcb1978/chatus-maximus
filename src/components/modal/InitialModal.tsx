@@ -1,5 +1,6 @@
 'use client';
 
+import axios from 'axios';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -23,12 +24,15 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import FileUpload from '@/components/file-upload';
+import { useRouter } from 'next/navigation';
 
 interface InitialModalProps {
 
 }
 
 const InitialModal: FC<InitialModalProps> = ({ }) => {
+  const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -55,7 +59,14 @@ const InitialModal: FC<InitialModalProps> = ({ }) => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      await axios.post('/api/server', values);
+      form.reset();
+      router.refresh();
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   if (!isMounted) {
@@ -83,7 +94,21 @@ const InitialModal: FC<InitialModalProps> = ({ }) => {
               <div
                 className='flex items-center justify-center text-center'
               >
-                TODO: Image Upload
+                <FormField
+                  control={form.control}
+                  name='imageUrl'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <FileUpload
+                          endpoint='serverImage'
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
               <FormField
                 control={form.control}
