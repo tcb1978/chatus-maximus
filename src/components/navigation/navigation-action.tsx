@@ -10,7 +10,7 @@ interface NavigationActionProps {
 
 const NavigationAction: FC<NavigationActionProps> = ({ }) => {
   return (
-    <div>
+    <div className='pt-4'>
       <ActionTooltip
         label='Create Server'
         side='left'
