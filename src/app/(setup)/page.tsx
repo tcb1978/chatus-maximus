@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import { redirect } from 'next/navigation';
 import { initialProfile } from '@/lib/initial-profile';
 import { db } from '@/lib/db';
+import InitialModal from '@/components/modal/InitialModal';
 
 interface SetupPageProps {
 
@@ -23,7 +24,9 @@ const SetupPage: FC<SetupPageProps> = async ({ }): Promise<JSX.Element> => {
     redirect(`/servers/${server.id}`);
   }
 
-  return (<div>Create a Server</div>);
+  return (
+    <InitialModal />
+  );
 };
 
 export default SetupPage;
