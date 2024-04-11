@@ -7,9 +7,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-  DropdownMenuItem
+  DropdownMenuItem,
+  DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu';
-import { ChevronDown, Settings, UserPlus } from 'lucide-react';
+import { ChevronDown, LogOut, PlusCircle, Settings, Trash, UserPlus, Users } from 'lucide-react';
 
 interface ServerHeaderProps {
   server: ServerWithMembersWithProfiles;
@@ -21,7 +22,7 @@ const ServerHeader: FC<ServerHeaderProps> = ({
   role,
 }): JSX.Element => {
   const isAdmin = role === MemberRole.ADMIN;
-  const isModerator = role === MemberRole.MODERATOR;
+  const isModerator = isAdmin || role === MemberRole.MODERATOR;
 
   return (
     <DropdownMenu>
@@ -56,6 +57,47 @@ const ServerHeader: FC<ServerHeaderProps> = ({
             <Settings className='w-4 h-4 ml-auto' />
           </DropdownMenuItem>
         ) : null}
+
+        {isAdmin ? (
+          <DropdownMenuItem
+            className=' px-3 py-2 text-sm cursor-pointer'
+          >
+            Manage Members
+            <Users className='w-4 h-4 ml-auto' />
+          </DropdownMenuItem>
+        ) : null}
+
+        {isModerator ? (
+          <DropdownMenuItem
+            className=' px-3 py-2 text-sm cursor-pointer'
+          >
+            Create Channel
+            <PlusCircle className='w-4 h-4 ml-auto' />
+          </DropdownMenuItem>
+        ) : null}
+
+        {isModerator ? (
+          <DropdownMenuSeparator />
+        ) : null}
+
+        {isAdmin ? (
+          <DropdownMenuItem
+            className='text-rose-500 px-3 py-2 text-sm cursor-pointer'
+          >
+            Delete Server
+            <Trash className='w-4 h-4 ml-auto' />
+          </DropdownMenuItem>
+        ) : null}
+
+        {!isAdmin ? (
+          <DropdownMenuItem
+            className='text-rose-500 px-3 py-2 text-sm cursor-pointer'
+          >
+            Leave Server
+            <LogOut className='w-4 h-4 ml-auto' />
+          </DropdownMenuItem>
+        ) : null}
+
       </DropdownMenuContent>
     </DropdownMenu>
   );
