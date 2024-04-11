@@ -17,7 +17,7 @@ const NavigationSidebar: FC<NavigationSidebarProps> = async ({ }): Promise<JSX.E
   const profile = await currentProfile();
 
   if (!profile) {
-    return redirect('/');
+    return redirect('/sign-up');
   }
 
   const servers = await db.server.findMany({
