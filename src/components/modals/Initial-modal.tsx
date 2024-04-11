@@ -31,7 +31,7 @@ interface InitialModalProps {
 
 }
 
-const InitialModal: FC<InitialModalProps> = ({ }) => {
+const InitialModal: FC<InitialModalProps> = ({ }): JSX.Element | null => {
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -122,8 +122,8 @@ const InitialModal: FC<InitialModalProps> = ({ }) => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        disabled={isLoading}
                         className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
+                        disabled={isLoading}
                         placeholder='Enter a server name'
                         {...field}
                       />
@@ -138,8 +138,8 @@ const InitialModal: FC<InitialModalProps> = ({ }) => {
             >
               <Button
                 disabled={isLoading}
-                variant={'primary'}
                 type='submit'
+                variant={'primary'}
               >
                 Create Server
               </Button>

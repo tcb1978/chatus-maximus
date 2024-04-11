@@ -44,8 +44,8 @@ const NavigationSidebar: FC<NavigationSidebarProps> = async ({ }): Promise<JSX.E
           <div key={server.id} className='mb-4'>
             <NavigationItem
               id={server.id}
-              name={server.name}
               imageUrl={server.imageUrl}
+              name={server.name}
             />
           </div>
         ))}

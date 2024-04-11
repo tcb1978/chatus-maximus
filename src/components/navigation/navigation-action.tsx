@@ -12,9 +12,9 @@ const NavigationAction: FC<NavigationActionProps> = ({ }) => {
   return (
     <div className='pt-4'>
       <ActionTooltip
+        align='center'
         label='Create Server'
         side='left'
-        align='center'
       >
         <button className='group flex items-center'>
           <div className='flex mx-3 h-[48px] w-[48px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden items-center justify-center bg-background dark:bg-neutral-700 group-hover:bg-emerald-500'>

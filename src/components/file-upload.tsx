@@ -25,17 +25,17 @@ const FileUpload: FC<FileUploadProps> = ({
       <div className='relative h-20 w-20 rounded-full bg-gray-100 flex items-center justify-center'>
         <Image
           fill
-          src={value}
           alt='Uploaded'
           className='rounded-full'
+          src={value}
         />
         <button>
           <X
-            className='absolute top-0 right-0 p-1 h-4 w-4 text-white bg-rose-500 rounded-full shadow-sm hover:bg-rose-600 transition-colors'
-            onClick={() => onChange()}
             aria-label='Remove'
+            className='absolute top-0 right-0 p-1 h-4 w-4 text-white bg-rose-500 rounded-full shadow-sm hover:bg-rose-600 transition-colors'
             role='button'
             type='button'
+            onClick={() => onChange()}
           />
         </button>
       </div>

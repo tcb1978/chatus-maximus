@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { redirect } from 'next/navigation';
 import { initialProfile } from '@/lib/initial-profile';
 import { db } from '@/lib/db';
-import InitialModal from '@/components/modal/InitialModal';
+import InitialModal from '@/components/modals/Initial-modal';
 
 interface SetupPageProps {
 

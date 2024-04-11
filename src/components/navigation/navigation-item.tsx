@@ -26,15 +26,15 @@ const NavigationItem: FC<NavigationItemProps> = ({
 
   return (
     <ActionTooltip
+      align='center'
       label={name}
       side='right'
-      align='center'
     >
       <button
-        onClick={onClick}
         className={cn(
           'group flex items-center relative',
         )}
+        onClick={onClick}
       >
         <div className={cn(
           'absolute left-0 bg-primary rounded-r-full transition-all w-[4px]',
@@ -46,7 +46,7 @@ const NavigationItem: FC<NavigationItemProps> = ({
           params?.serverId === id && 'bg-primary/10 text-primary rounded-[16px]',
         )}>
           <Avatar className='text-white w-full h-full flex items-center justify-center bg-transparent'>
-            <AvatarImage src={imageUrl} alt='Channel' />
+            <AvatarImage alt='Channel' src={imageUrl} />
             <AvatarFallback className='text-white w-full h-full flex items-center justify-center'>
               {name[0].slice(0, 2)}
             </AvatarFallback>
