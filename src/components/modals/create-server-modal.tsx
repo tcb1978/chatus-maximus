@@ -26,7 +26,7 @@ import { Input } from '@/components/ui/input';
 import FileUpload from '@/components/file-upload';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
-import { useModal } from '@/hooks/use-modal-store';
+import { ModalEnum, useModal } from '@/hooks/use-modal-store';
 
 interface CreateServerModalProps {
 
@@ -36,7 +36,7 @@ const CreateServerModal: FC<CreateServerModalProps> = ({ }): JSX.Element => {
   const router = useRouter();
 
   const { isOpen, onClose, type } = useModal();
-  const isModalOpen = isOpen && type === 'createServer';
+  const isModalOpen = isOpen && type === ModalEnum.CreateServer;
 
   const formSchema = z.object({
     name: z.string().min(1, {
@@ -62,6 +62,7 @@ const CreateServerModal: FC<CreateServerModalProps> = ({ }): JSX.Element => {
       await axios.post('/api/server', values);
       form.reset();
       router.refresh();
+      onClose();
     } catch (error) {
       console.error(error);
     }

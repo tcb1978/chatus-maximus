@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 
-export type ModalType = 'createServer';
+export enum ModalEnum {
+  CreateServer = 'createServer',
+}
+
+export type ModalType = ModalEnum.CreateServer;
 
 interface ModalStore {
   type: ModalType | null;
