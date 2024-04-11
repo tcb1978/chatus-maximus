@@ -30,8 +30,8 @@ const ServerHeader: FC<ServerHeaderProps> = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className='focus:outline-none'
         asChild
+        className='focus:outline-none'
       >
         <button
           className='w-full text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2 hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition'
@@ -45,8 +45,8 @@ const ServerHeader: FC<ServerHeaderProps> = ({
       >
         {isModerator ? (
           <DropdownMenuItem
-            onClick={() => onOpen(ModalEnum.Invite, { server })}
             className='text-indigo-600 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer'
+            onClick={() => onOpen(ModalEnum.Invite, { server })}
           >
             Invite People
             <UserPlus className='w-4 h-4 ml-auto' />

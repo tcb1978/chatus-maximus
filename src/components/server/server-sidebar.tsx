@@ -58,8 +58,8 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
   return (
     <div className='flex flex-col h-full text-primary w-full dark:bg-[#2b2d31] bg-[#F2F3F5]'>
       <ServerHeader
-        server={server}
         role={role}
+        server={server}
       />
     </div>
   );
