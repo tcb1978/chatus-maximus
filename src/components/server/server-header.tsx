@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown, LogOut, PlusCircle, Settings, Trash, UserPlus, Users } from 'lucide-react';
+import { ModalEnum, useModal } from '@/hooks/use-modal-store';
 
 interface ServerHeaderProps {
   server: ServerWithMembersWithProfiles;
@@ -21,6 +22,8 @@ const ServerHeader: FC<ServerHeaderProps> = ({
   server,
   role,
 }): JSX.Element => {
+  const { onOpen } = useModal();
+
   const isAdmin = role === MemberRole.ADMIN;
   const isModerator = isAdmin || role === MemberRole.MODERATOR;
 
@@ -42,6 +45,7 @@ const ServerHeader: FC<ServerHeaderProps> = ({
       >
         {isModerator ? (
           <DropdownMenuItem
+            onClick={() => onOpen(ModalEnum.Invite, { server })}
             className='text-indigo-600 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer'
           >
             Invite People
