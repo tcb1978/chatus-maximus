@@ -74,7 +74,6 @@ const InviteModal: FC<InviteModalProps> = ({ }): JSX.Element => {
               disabled={isLoading}
             />
             <Button
-              className='w-full'
               onClick={onCopy}
               size='icon'
               disabled={isLoading}
