@@ -6,13 +6,15 @@ export enum ModalEnum {
   Invite = 'invite',
   EditServer = 'editServer',
   Members = 'members',
+  CreateChannel = 'createChannel',
 }
 
 export type ModalType =
   | ModalEnum.CreateServer
   | ModalEnum.Invite
   | ModalEnum.EditServer
-  | ModalEnum.Members;
+  | ModalEnum.Members
+  | ModalEnum.CreateChannel;
 
 interface ModalData {
   server?: Server;

@@ -76,6 +76,7 @@ const ServerHeader: FC<ServerHeaderProps> = ({
         {isModerator ? (
           <DropdownMenuItem
             className=' px-3 py-2 text-sm cursor-pointer'
+            onClick={() => onOpen(ModalEnum.CreateChannel, { server })}
           >
             Create Channel
             <PlusCircle className='w-4 h-4 ml-auto' />

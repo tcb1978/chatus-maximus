@@ -19,9 +19,9 @@ const UserAvatar: FC<UserAvatarProps> = ({
       className
     )}>
       <AvatarImage
+        alt={alt}
         className='rounded-full'
         src={src}
-        alt={alt}
       />
     </Avatar>
   );

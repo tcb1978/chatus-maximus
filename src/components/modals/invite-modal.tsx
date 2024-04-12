@@ -69,24 +69,24 @@ const InviteModal: FC<InviteModalProps> = ({ }): JSX.Element => {
           <div className='flex items-center mt-2 gap-x-2'>
             <Input
               className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
+              disabled={isLoading}
               value={inviteUrl}
               onChange={() => { }}
-              disabled={isLoading}
             />
             <Button
-              onClick={onCopy}
-              size='icon'
               disabled={isLoading}
+              size='icon'
+              onClick={onCopy}
             >
               {copied ? (<Check className='w-4 h-4 text-green-500' />) : (<Copy className='w-4 h-4' />)}
             </Button>
           </div>
           <Button
-            onClick={onNew}
-            variant='link'
             className='text-xs text-zinc-500 mt-4'
             disabled={isLoading}
             size='sm'
+            variant='link'
+            onClick={onNew}
           >
             Generate a new link
             <RefreshCw className='w-4 h-4 ml-2' />

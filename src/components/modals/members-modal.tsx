@@ -109,8 +109,8 @@ const MembersModal: FC<MembersModalProps> = ({ }): JSX.Element => {
               className='flex items-center gap-x-2 mb-6'
             >
               <UserAvatar
-                src={member.profile?.imageUrl}
                 alt={member.profile?.name}
+                src={member.profile?.imageUrl}
               />
               <div className='flex flex-col gap-y-1'>
                 <div className='text-xs font-semibold flex items-center gap-x-1'>
