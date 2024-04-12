@@ -133,10 +133,9 @@ const CreateChannelModal: FC<CreateChannelModalProps> = ({ }): JSX.Element => {
                     </FormLabel>
                     <FormControl>
                       <Select
+                        defaultValue={field.value}
                         disabled={isLoading}
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      // {...field}
                       >
                         <FormControl>
                           <SelectTrigger
