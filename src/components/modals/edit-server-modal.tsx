@@ -5,7 +5,6 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import { useEffect, useState, type FC } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -26,18 +25,19 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import FileUpload from '@/components/file-upload';
 import { useRouter } from 'next/navigation';
+import { FC, useEffect } from 'react';
+import { ModalEnum, useModal } from '@/hooks/use-modal-store';
 
-interface InitialModalProps {
+interface EditServerModalProps {
 
 }
 
-const InitialModal: FC<InitialModalProps> = ({ }): JSX.Element | null => {
+const EditServerModal: FC<EditServerModalProps> = ({ }): JSX.Element => {
   const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const { isOpen, onClose, type, data } = useModal();
+  const isModalOpen = isOpen && type === ModalEnum.EditServer;
+  const { server } = data;
 
   const formSchema = z.object({
     name: z.string().min(1, {
@@ -56,25 +56,33 @@ const InitialModal: FC<InitialModalProps> = ({ }): JSX.Element | null => {
     }
   });
 
+  useEffect(() => {
+    if (server) {
+      form.setValue('name', server.name);
+      form.setValue('imageUrl', server.imageUrl);
+    }
+  }, [server, form]);
+
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post('/api/servers', values);
+      await axios.patch(`/api/servers/${server?.id}`, values);
       form.reset();
       router.refresh();
-      window.location.reload();
+      onClose();
     } catch (error) {
       console.error(error);
     }
   };
 
-  if (!isMounted) {
-    return null;
-  }
+  const handleClose = () => {
+    form.reset();
+    onClose();
+  };
 
   return (
-    <Dialog open={true}>
+    <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className='bg-white text-black overflow-hidden'>
         <DialogHeader className='pt-8 px-6'>
           <DialogTitle className='text-2xl text-center font-bold'>
@@ -142,7 +150,7 @@ const InitialModal: FC<InitialModalProps> = ({ }): JSX.Element | null => {
                 type='submit'
                 variant={'primary'}
               >
-                Create Server
+                Save
               </Button>
             </DialogFooter>
           </form>
@@ -156,4 +164,4 @@ const InitialModal: FC<InitialModalProps> = ({ }): JSX.Element | null => {
   );
 };
 
-export default InitialModal;
+export default EditServerModal;

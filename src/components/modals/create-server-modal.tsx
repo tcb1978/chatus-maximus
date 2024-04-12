@@ -137,6 +137,7 @@ const CreateServerModal: FC<CreateServerModalProps> = ({ }): JSX.Element => {
               className='bg-gray-100 px-6 py-4'
             >
               <Button
+                className='w-full'
                 disabled={isLoading}
                 type='submit'
                 variant={'primary'}

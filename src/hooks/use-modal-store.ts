@@ -4,9 +4,13 @@ import { create } from 'zustand';
 export enum ModalEnum {
   CreateServer = 'createServer',
   Invite = 'invite',
+  EditServer = 'editServer',
 }
 
-export type ModalType = ModalEnum.CreateServer | ModalEnum.Invite;
+export type ModalType =
+  | ModalEnum.CreateServer
+  | ModalEnum.Invite
+  | ModalEnum.EditServer;
 
 interface ModalData {
   server?: Server;
