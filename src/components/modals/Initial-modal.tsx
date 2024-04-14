@@ -149,9 +149,9 @@ const InitialModal: FC<InitialModalProps> = ({ }): JSX.Element | null => {
         </Form>
 
       </DialogContent>
-      <DialogFooter>
+      {/* <DialogFooter>
         <button className='btn btn-primary'>Get started</button>
-      </DialogFooter>
+      </DialogFooter> */}
     </Dialog>
   );
 };

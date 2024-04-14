@@ -1,14 +1,37 @@
 import { currentProfile } from '@/lib/current-profile';
 import { db } from '@/lib/db';
-import { ChannelType } from '@prisma/client';
-import { Server } from 'lucide-react';
+import { ChannelType, MemberRole } from '@prisma/client';
 import { redirect } from 'next/navigation';
 import type { FC } from 'react';
 import ServerHeader from './server-header';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import ServerSearch from './server-search';
+import { Hash, Mic, Radio, ShieldAlert, ShieldCheck } from 'lucide-react';
 
 interface ServerSidebarProps {
   serverId: string;
 }
+
+export enum ChannelEnum {
+  CHANNEL = 'channel',
+  MEMBER = 'member',
+  TEXT = 'Text Channel',
+  VOICE = 'Voice Channel',
+  AUDIO = 'Audio Channel',
+  MEMBERS = 'Members',
+}
+
+const iconMap = {
+  [ChannelType.TEXT]: <Hash className='mr-2 h4 -w-4' />,
+  [ChannelType.VOICE]: <Mic className='mr-2 h4 -w-4' />,
+  [ChannelType.AUDIO]: <Radio className='mr-2 h4 -w-4' />,
+};
+
+const roleIconMap = {
+  [MemberRole.GUEST]: null,
+  [MemberRole.MODERATOR]: <ShieldCheck className='mr-2 h4 -w-4 text-indigo-500' />,
+  [MemberRole.ADMIN]: <ShieldAlert className='mr-2 h4 -w-4 text-rose-500' />,
+};
 
 const ServerSidebar: FC<ServerSidebarProps> = async ({
   serverId,
@@ -61,6 +84,50 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
         role={role}
         server={server}
       />
+      <ScrollArea className='flex-1 px-3'>
+        <div className="mt-2">
+          <ServerSearch
+            data={[
+              {
+                label: ChannelEnum.TEXT,
+                type: ChannelEnum.CHANNEL,
+                data: textChannels?.map((channel) => ({
+                  id: channel.id,
+                  name: channel.name,
+                  icon: iconMap[channel.type]
+                }))
+              },
+              {
+                label: ChannelEnum.AUDIO,
+                type: ChannelEnum.CHANNEL,
+                data: audioChannels?.map((channel) => ({
+                  id: channel.id,
+                  name: channel.name,
+                  icon: iconMap[channel.type]
+                }))
+              },
+              {
+                label: ChannelEnum.VOICE,
+                type: ChannelEnum.CHANNEL,
+                data: voiceChannels?.map((channel) => ({
+                  id: channel.id,
+                  name: channel.name,
+                  icon: iconMap[channel.type]
+                }))
+              },
+              {
+                label: ChannelEnum.MEMBERS,
+                type: ChannelEnum.MEMBER,
+                data: members?.map((member) => ({
+                  id: member.id,
+                  name: member.profile.name,
+                  icon: roleIconMap[member.role]
+                }))
+              }
+            ]}
+          />
+        </div>
+      </ScrollArea>
     </div>
   );
 };

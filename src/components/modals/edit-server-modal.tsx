@@ -157,9 +157,9 @@ const EditServerModal: FC<EditServerModalProps> = ({ }): JSX.Element => {
         </Form>
 
       </DialogContent>
-      <DialogFooter>
+      {/* <DialogFooter>
         <button className='btn btn-primary'>Get started</button>
-      </DialogFooter>
+      </DialogFooter> */}
     </Dialog>
   );
 };
