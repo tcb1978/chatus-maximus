@@ -1,4 +1,4 @@
-import { ChannelType, Server } from '@prisma/client';
+import { Channel, ChannelType, Server } from '@prisma/client';
 import { create } from 'zustand';
 
 export enum ModalEnum {
@@ -9,6 +9,7 @@ export enum ModalEnum {
   CreateChannel = 'createChannel',
   LeaveServer = 'leaveServer',
   DeleteServer = 'deleteServer',
+  DeleteChannel = 'deleteChannel',
 }
 
 export type ModalType =
@@ -18,10 +19,12 @@ export type ModalType =
   | ModalEnum.Members
   | ModalEnum.CreateChannel
   | ModalEnum.LeaveServer
-  | ModalEnum.DeleteServer;
+  | ModalEnum.DeleteServer
+  | ModalEnum.DeleteChannel;
 
 interface ModalData {
   server?: Server;
+  channel?: Channel;
   channelType? : ChannelType;
 }
 

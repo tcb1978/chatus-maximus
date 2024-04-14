@@ -16,7 +16,7 @@ interface ServerSectionProps {
   server?: ServerWithMembersWithProfiles;
 }
 
-export enum ActionLabel {
+export enum ActionLabelEnum {
   CREATE_CHANNEL = 'Create Channel',
   CREATE_TEXT_CHANNEL = 'Create Text Channel',
   CREATE_VOICE_CHANNEL = 'Create Voice Channel',
@@ -45,7 +45,7 @@ const ServerSection: FC<ServerSectionProps> = ({
       </p>
       {role !== MemberRole.GUEST && sectionType === SectionEnum.CHANNELS && (
         <ActionTooltip
-          label={ActionLabel.CREATE_CHANNEL}
+          label={ActionLabelEnum.CREATE_CHANNEL}
           side='top'
         >
           <button
@@ -58,7 +58,7 @@ const ServerSection: FC<ServerSectionProps> = ({
       )}
       {role === MemberRole.ADMIN && sectionType === SectionEnum.MEMBERS && (
         <ActionTooltip
-          label={ActionLabel.MANAGE_MEMBERS}
+          label={ActionLabelEnum.MANAGE_MEMBERS}
           side='top'
         >
           <button
