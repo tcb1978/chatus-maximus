@@ -7,6 +7,10 @@ import ServerHeader from './server-header';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import ServerSearch from './server-search';
 import { Hash, Mic, Radio, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { Separator } from '../ui/separator';
+import ServerSection from './server-section';
+import ServerChannel from './server-channel';
+import ServerMember from './server-member';
 
 interface ServerSidebarProps {
   serverId: string;
@@ -19,6 +23,11 @@ export enum ChannelEnum {
   VOICE = 'Voice Channel',
   AUDIO = 'Audio Channel',
   MEMBERS = 'Members',
+}
+
+export enum SectionEnum {
+  CHANNELS = 'channels',
+  MEMBERS = 'members',
 }
 
 const iconMap = {
@@ -75,7 +84,7 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
     return redirect('/');
   }
 
-  const role = server.members.find((member) => member.profileId === profile.id)?.role;
+  const role = server.members.find((member) => member.profileId === profile.id)?.role ?? MemberRole.GUEST;
 
 
   return (
@@ -127,6 +136,91 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
             ]}
           />
         </div>
+        <Separator className='bg-zinc-200 dark:bg-zinc-700 rounded-md-my-2' />
+        {!!textChannels?.length ? (
+          <div className='mb-2'>
+            <ServerSection
+              sectionType={SectionEnum.CHANNELS}
+              channelType={ChannelType.TEXT}
+              role={role}
+              label={ChannelEnum.TEXT}
+            />
+            {textChannels.map((channel) => (
+              <div className='space-y-[2px]'>
+                <ServerChannel
+                  key={channel.id}
+                  channel={channel}
+                  role={role}
+                  server={server}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (null)}
+
+        {!!audioChannels?.length ? (
+          <div className='mb-2'>
+            <ServerSection
+              sectionType={SectionEnum.CHANNELS}
+              channelType={ChannelType.AUDIO}
+              role={role}
+              label={ChannelEnum.AUDIO}
+            />
+            {audioChannels.map((channel) => (
+              <div className='space-y-[2px]'>
+                <ServerChannel
+                  key={channel.id}
+                  channel={channel}
+                  role={role}
+                  server={server}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (null)}
+
+        {!!voiceChannels?.length ? (
+          <div className='mb-2'>
+            <ServerSection
+              sectionType={SectionEnum.CHANNELS}
+              channelType={ChannelType.VOICE}
+              role={role}
+              label={ChannelEnum.VOICE}
+            />
+            {voiceChannels.map((channel) => (
+              <div className='space-y-[2px]'>
+                <ServerChannel
+                  key={channel.id}
+                  channel={channel}
+                  role={role}
+                  server={server}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (null)}
+
+        {!!members?.length ? (
+          <div className='mb-2'>
+            <ServerSection
+              sectionType={SectionEnum.MEMBERS}
+              server={server}
+              role={role}
+              label={ChannelEnum.MEMBERS}
+            />
+            {members.map((member) => (
+              <div className='space-y-[2px]'>
+                <ServerMember
+                  key={member.id}
+                  member={member}
+                  server={server}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (null)}
+
+
       </ScrollArea>
     </div>
   );

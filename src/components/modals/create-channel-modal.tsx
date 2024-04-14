@@ -2,7 +2,7 @@
 
 import qs from 'query-string';
 import { useParams, useRouter } from 'next/navigation';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import axios from 'axios';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -43,8 +43,9 @@ const CreateChannelModal: FC<CreateChannelModalProps> = ({ }): JSX.Element => {
   const router = useRouter();
   const params = useParams();
 
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
   const isModalOpen = isOpen && type === ModalEnum.CreateChannel;
+  const { channelType } = data;
 
   const formSchema = z.object({
     name: z.string().min(1, {
@@ -59,9 +60,17 @@ const CreateChannelModal: FC<CreateChannelModalProps> = ({ }): JSX.Element => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
-      type: ChannelType.TEXT,
+      type: channelType || ChannelType.TEXT
     }
   });
+
+  useEffect(() => {
+    if (channelType) {
+      form.setValue('type', channelType);
+    } else {
+      form.setValue('type', ChannelType.TEXT);
+    }
+  }, [channelType, form]);
 
   const isLoading = form.formState.isSubmitting;
 
