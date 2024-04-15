@@ -44,6 +44,8 @@ const MemberIdPage: FC<MemberIdPageProps> = async ({
   const { profileId } = currentMember;
   const conversation = await getOrCreateConversation(profileId, memberId);
 
+  console.log('conversation', conversation);
+
   if (!conversation) {
     return redirect(`/servers/${serverId}`);
   }
