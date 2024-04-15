@@ -49,8 +49,8 @@ const ServerSection: FC<ServerSectionProps> = ({
           side='top'
         >
           <button
-            onClick={() => onOpen(ModalEnum.CreateChannel, { channelType })}
             className='text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition'
+            onClick={() => onOpen(ModalEnum.CreateChannel, { channelType })}
           >
             <Plus className='h-4 w-4' />
           </button>
@@ -62,8 +62,8 @@ const ServerSection: FC<ServerSectionProps> = ({
           side='top'
         >
           <button
-            onClick={() => onOpen(ModalEnum.Members)}
             className='text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition'
+            onClick={() => onOpen(ModalEnum.Members)}
           >
             <Settings className='h-4 w-4' />
           </button>

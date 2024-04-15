@@ -140,15 +140,14 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
         {!!textChannels?.length ? (
           <div className='mb-2'>
             <ServerSection
-              sectionType={SectionEnum.CHANNELS}
               channelType={ChannelType.TEXT}
-              role={role}
               label={ChannelEnum.TEXT}
+              role={role}
+              sectionType={SectionEnum.CHANNELS}
             />
             {textChannels.map((channel) => (
-              <div className='space-y-[2px]'>
+              <div key={channel.id} className='space-y-[2px]'>
                 <ServerChannel
-                  key={channel.id}
                   channel={channel}
                   role={role}
                   server={server}
@@ -161,15 +160,14 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
         {!!audioChannels?.length ? (
           <div className='mb-2'>
             <ServerSection
-              sectionType={SectionEnum.CHANNELS}
               channelType={ChannelType.AUDIO}
-              role={role}
               label={ChannelEnum.AUDIO}
+              role={role}
+              sectionType={SectionEnum.CHANNELS}
             />
             {audioChannels.map((channel) => (
-              <div className='space-y-[2px]'>
+              <div key={channel.id} className='space-y-[2px]'>
                 <ServerChannel
-                  key={channel.id}
                   channel={channel}
                   role={role}
                   server={server}
@@ -182,15 +180,14 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
         {!!voiceChannels?.length ? (
           <div className='mb-2'>
             <ServerSection
-              sectionType={SectionEnum.CHANNELS}
               channelType={ChannelType.VOICE}
-              role={role}
               label={ChannelEnum.VOICE}
+              role={role}
+              sectionType={SectionEnum.CHANNELS}
             />
             {voiceChannels.map((channel) => (
-              <div className='space-y-[2px]'>
+              <div key={channel.id} className='space-y-[2px]'>
                 <ServerChannel
-                  key={channel.id}
                   channel={channel}
                   role={role}
                   server={server}
@@ -203,15 +200,14 @@ const ServerSidebar: FC<ServerSidebarProps> = async ({
         {!!members?.length ? (
           <div className='mb-2'>
             <ServerSection
+              label={ChannelEnum.MEMBERS}
+              role={role}
               sectionType={SectionEnum.MEMBERS}
               server={server}
-              role={role}
-              label={ChannelEnum.MEMBERS}
             />
             {members.map((member) => (
-              <div className='space-y-[2px]'>
+              <div key={member.id} className='space-y-[2px]'>
                 <ServerMember
-                  key={member.id}
                   member={member}
                   server={server}
                 />

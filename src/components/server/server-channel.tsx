@@ -7,7 +7,7 @@ import { useParams, useRouter } from 'next/navigation';
 import type { FC } from 'react';
 import ActionTooltip from '@/components/action-tooltip';
 import { ActionLabelEnum } from './server-section';
-import { ModalEnum, useModal } from '@/hooks/use-modal-store';
+import { ModalEnum, ModalType, useModal } from '@/hooks/use-modal-store';
 
 interface ServerChannelProps {
   channel: Channel;
@@ -34,12 +34,26 @@ const ServerChannel: FC<ServerChannelProps> = ({
 
   const Icon = iconMap[channel.type];
 
+  const onClick = () => {
+    router.push(`/servers/${params?.serverId}/channels/${channel.id}`);
+  };
+
+  const onAction = (e: React.MouseEvent, action: ModalType) => {
+    e.stopPropagation();
+
+    onOpen(action, {
+      channel,
+      server,
+    });
+  };
+
   return (
     <button
       className={cn(
         'group px-2 py-2 rounded-md flex items-center gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1',
         params?.channelId === channel.id && 'bg-zinc-700/20 dark:bg-zinc-700',
       )}
+      onClick={onClick}
     >
       {Icon}
       <p
@@ -56,8 +70,8 @@ const ServerChannel: FC<ServerChannelProps> = ({
             label={ActionLabelEnum.EDIT_SERVER} side='top'
           >
             <Edit
-              onClick={(() => onOpen(ModalEnum.EditChannel, { channel, server }))}
               className='hidden group-hover:block w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition'
+              onClick={((e) => onAction(e, ModalEnum.EditChannel))}
             />
           </ActionTooltip>
 
@@ -65,8 +79,8 @@ const ServerChannel: FC<ServerChannelProps> = ({
             label={ActionLabelEnum.DELETE_SERVER} side='top'
           >
             <Trash
-              onClick={() => onOpen(ModalEnum.DeleteChannel, { channel, server })}
               className='hidden group-hover:block w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition'
+              onClick={(e) => onAction(e, ModalEnum.DeleteChannel)}
             />
           </ActionTooltip>
         </div>

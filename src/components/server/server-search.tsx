@@ -68,8 +68,8 @@ const ServerSearch: FC<ServerSearchProps> = ({
                 {data?.map(({ icon, name, id }) => {
                   return (
                     <CommandItem
-                      onSelect={() => handleClick({ id, type: type === 'channel' ? ChannelEnum.CHANNEL : ChannelEnum.MEMBER })}
                       key={id}
+                      onSelect={() => handleClick({ id, type: type === 'channel' ? ChannelEnum.CHANNEL : ChannelEnum.MEMBER })}
                     >
                       {icon}
                       <span>{name}</span>
