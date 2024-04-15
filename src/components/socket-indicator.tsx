@@ -11,8 +11,6 @@ interface SocketIndicatorProps {
 const SocketIndicator: FC<SocketIndicatorProps> = ({ }): JSX.Element => {
   const { isConnected } = useSocket();
 
-  console.log('isConnected', isConnected);
-
   if (!isConnected) {
     return (
       <Badge
