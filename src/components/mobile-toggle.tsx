@@ -20,16 +20,16 @@ const MobileToggle: FC<MobileToggleProps> = ({
     <Sheet>
       <SheetTrigger asChild>
         <Button
-          variant={'ghost'}
-          size='icon'
           className='md:hidden'
+          size='icon'
+          variant={'ghost'}
         >
           <Menu className='md:hidden' />
         </Button>
       </SheetTrigger>
       <SheetContent
-        side='left'
         className='p-0 flex gap-0'
+        side='left'
       >
         <div className='w-[72px]'>
           <NavigationSidebar />

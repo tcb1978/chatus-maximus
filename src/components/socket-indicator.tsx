@@ -14,8 +14,8 @@ const SocketIndicator: FC<SocketIndicatorProps> = ({ }): JSX.Element => {
   if (!isConnected) {
     return (
       <Badge
-        variant='outline'
         className='bg-yellow-600 text-white border-none'
+        variant='outline'
       >
         Fallback: Polling every 1s
       </Badge>
@@ -24,8 +24,8 @@ const SocketIndicator: FC<SocketIndicatorProps> = ({ }): JSX.Element => {
 
   return (
     <Badge
-      variant='outline'
       className='bg-emerald-600 text-white border-none'
+      variant='outline'
     >
       Live: Real-time updates
     </Badge>

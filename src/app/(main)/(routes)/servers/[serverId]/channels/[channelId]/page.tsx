@@ -54,13 +54,13 @@ const ChannelIdPage: FC<ChannelIdPageProps> = async ({
       />
       <div className='flex-1'>Future Messages</div>
       <ChatInput
-        name={channel.name}
-        type={ChannelEnum.CHANNEL}
         apiUrl={`/api/socket/messages`}
+        name={channel.name}
         query={{
           serverId,
           channelId,
         }}
+        type={ChannelEnum.CHANNEL}
       />
     </div>
   );

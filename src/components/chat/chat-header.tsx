@@ -29,8 +29,8 @@ const ChatHeader: FC<ChatHeaderProps> = ({
       )}
       {type === ChannelEnum.CONVERSATION && (
         <UserAvatar
-          src={imageUrl}
           className='w-8 h-8 md:h-8 me:w-8 rounded-full mr-2'
+          src={imageUrl}
         />
       )}
       <p className='font-semibold text-md text-black dark:text-white'>

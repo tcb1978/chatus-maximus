@@ -1,6 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
+import { useRouter } from 'next/navigation';
 import { ChannelEnum } from '../server/server-sidebar';
 import * as z from 'zod';
 import axios from 'axios';
@@ -15,7 +16,7 @@ import {
   FormItem
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Plus, Smile } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { ModalEnum, useModal } from '@/hooks/use-modal-store';
 import EmojiPicker from '@/components/ui/emoji-picker';
 
@@ -37,6 +38,7 @@ const ChatInput: FC<ChatInputProps> = ({
   type,
 }): JSX.Element => {
   const { onOpen } = useModal();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,8 +57,10 @@ const ChatInput: FC<ChatInputProps> = ({
         url: apiUrl,
         query,
       });
-
       await axios.post(url, values);
+      form.reset();
+      router.refresh();
+
     } catch (error) {
       console.log(error);
     }
@@ -74,11 +78,12 @@ const ChatInput: FC<ChatInputProps> = ({
                 <div className='releative p-4 pb-6'>
                   <Input
                     {...field}
-                    placeholder={`Message ${type === ChannelEnum.CONVERSATION ? name : '#' + name}`}
                     className='px-14 py-6 pl-20 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200'
                     disabled={isLoading}
+                    placeholder={`Message ${type === ChannelEnum.CONVERSATION ? name : '#' + name}`}
                   />
                   <button
+                    className='absolute bottom-9 left-[21.5rem] w-[24px] h-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center'
                     type='button'
                     onClick={() => {
                       onOpen(ModalEnum.MessageFile, {
@@ -86,12 +91,14 @@ const ChatInput: FC<ChatInputProps> = ({
                         query
                       });
                     }}
-                    className='absolute bottom-9 left-[21.5rem] w-[24px] h-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center'
                   >
                     <Plus className='h-6 w-6 text-white dark:text-[#313338]' />
                   </button>
-                  <div className="absolute bottom-9 right-8">
-                    <EmojiPicker />
+                  <div className='absolute bottom-8 right-8'>
+                    <EmojiPicker
+                      onChange={(emoji: string) => {
+                        field.onChange(`${field.value} ${emoji}`);
+                      }} />
                   </div>
                 </div>
               </FormControl>
