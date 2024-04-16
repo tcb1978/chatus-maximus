@@ -56,7 +56,7 @@ const ChannelIdPage: FC<ChannelIdPageProps> = async ({
       <ChatInput
         name={channel.name}
         type={ChannelEnum.CHANNEL}
-        apiUrl={`/api/servers/socket/messages`}
+        apiUrl={`/api/socket/messages`}
         query={{
           serverId,
           channelId,

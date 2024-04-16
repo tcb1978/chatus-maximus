@@ -3,6 +3,8 @@
 import type { FC } from 'react';
 import { ChannelEnum } from '../server/server-sidebar';
 import * as z from 'zod';
+import axios from 'axios';
+import qs from 'query-string';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -42,9 +44,18 @@ const ChatInput: FC<ChatInputProps> = ({
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (
-    value: z.infer<typeof formSchema>,
+    values: z.infer<typeof formSchema>,
   ) => {
-    console.log('value', value);
+    try {
+      const url = qs.stringifyUrl({
+        url: apiUrl,
+        query,
+      });
+
+      await axios.post(url, values);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
