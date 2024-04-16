@@ -26,6 +26,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import FileUpload from '@/components/file-upload';
 import { useRouter } from 'next/navigation';
+import { ModalEnum } from '@/hooks/use-modal-store';
 
 interface InitialModalProps {
 
@@ -101,7 +102,7 @@ const InitialModal: FC<InitialModalProps> = ({ }): JSX.Element | null => {
                     <FormItem>
                       <FormControl>
                         <FileUpload
-                          endpoint='serverImage'
+                          endpoint={ModalEnum.ServerImage}
                           value={field.value}
                           onChange={field.onChange}
                         />

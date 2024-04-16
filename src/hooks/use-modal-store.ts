@@ -3,6 +3,7 @@ import { create } from 'zustand';
 
 export enum ModalEnum {
   CreateServer = 'createServer',
+  ServerImage = 'serverImage',
   Invite = 'invite',
   EditServer = 'editServer',
   Members = 'members',
@@ -11,10 +12,12 @@ export enum ModalEnum {
   DeleteServer = 'deleteServer',
   DeleteChannel = 'deleteChannel',
   EditChannel = 'editChannel',
+  MessageFile = 'messageFile',
 }
 
 export type ModalType =
   | ModalEnum.CreateServer
+  | ModalEnum.ServerImage
   | ModalEnum.Invite
   | ModalEnum.EditServer
   | ModalEnum.Members
@@ -22,12 +25,15 @@ export type ModalType =
   | ModalEnum.LeaveServer
   | ModalEnum.DeleteServer
   | ModalEnum.DeleteChannel
-  | ModalEnum.EditChannel;
+  | ModalEnum.EditChannel
+  | ModalEnum.MessageFile;
 
 interface ModalData {
   server?: Server;
   channel?: Channel;
   channelType? : ChannelType;
+  apiUrl?: string;
+  query?: Record<string, any>
 }
 
 interface ModalStore {

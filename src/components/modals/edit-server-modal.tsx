@@ -109,7 +109,7 @@ const EditServerModal: FC<EditServerModalProps> = ({ }): JSX.Element => {
                     <FormItem>
                       <FormControl>
                         <FileUpload
-                          endpoint='serverImage'
+                          endpoint={ModalEnum.ServerImage}
                           value={field.value}
                           onChange={field.onChange}
                         />

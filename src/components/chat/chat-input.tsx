@@ -16,6 +16,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Plus, Smile } from 'lucide-react';
+import { ModalEnum, useModal } from '@/hooks/use-modal-store';
+import EmojiPicker from '@/components/ui/emoji-picker';
 
 interface ChatInputProps {
   apiUrl: string;
@@ -34,6 +36,8 @@ const ChatInput: FC<ChatInputProps> = ({
   name,
   type,
 }): JSX.Element => {
+  const { onOpen } = useModal();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -76,13 +80,18 @@ const ChatInput: FC<ChatInputProps> = ({
                   />
                   <button
                     type='button'
-                    onClick={() => { }}
-                    className='HELLO absolute bottom-9 left-[21.5rem] w-[24px] h-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center'
+                    onClick={() => {
+                      onOpen(ModalEnum.MessageFile, {
+                        apiUrl,
+                        query
+                      });
+                    }}
+                    className='absolute bottom-9 left-[21.5rem] w-[24px] h-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center'
                   >
                     <Plus className='h-6 w-6 text-white dark:text-[#313338]' />
                   </button>
                   <div className="absolute bottom-9 right-8">
-                    <Smile />
+                    <EmojiPicker />
                   </div>
                 </div>
               </FormControl>
