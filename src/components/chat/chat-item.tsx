@@ -152,9 +152,10 @@ const ChatItem: FC<ChatItemProps> = ({
               target='_blank'
             >
               <Image
-                fill
+                width={192}
+                height={192}
                 alt={content}
-                className='object-cover'
+                className='rounded-md mt-2 object-fill'
                 src={fileUrl}
               />
             </a>

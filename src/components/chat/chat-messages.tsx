@@ -1,7 +1,7 @@
 'use client';
 
 import { Member, Message, Profile } from '@prisma/client';
-import { Fragment, type FC } from 'react';
+import { Fragment, useRef, ElementRef, type FC } from 'react';
 import { ChannelEnum } from '../server/server-sidebar';
 import ChatWelcome from './chat-welcome';
 import { useChatQuery } from '@/hooks/use-chat-query';
@@ -9,6 +9,7 @@ import { Loader2, ServerCrash } from 'lucide-react';
 import ChatItem from './chat-item';
 import { add, format } from 'date-fns';
 import { useChatSocket } from '@/hooks/use-chat-socket';
+import { useChatScroll } from '@/hooks/use-chat-scroll';
 
 const DATE_FORMAT = 'd MMM yyyy, HH:mm';
 
@@ -46,6 +47,9 @@ const ChatMessages: FC<ChatMessagesProps> = ({
   const addKey = `chat:${chatId}:messages`;
   const updateKey = `chat:${chatId}:message:update`;
 
+  const chatRef = useRef<ElementRef<typeof ChatItem>>(null);
+  const bottomRef = useRef<ElementRef<typeof ChatItem>>(null);
+
   const {
     data,
     fetchNextPage,
@@ -64,6 +68,16 @@ const ChatMessages: FC<ChatMessagesProps> = ({
     updateKey,
     queryKey,
   });
+
+  useChatScroll({
+    chatRef,
+    bottomRef,
+    loadMore: fetchNextPage,
+    shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
+    count: data?.pages?.[0]?.items?.length ?? 0,
+  });
+
+  console.log('!isFetchingNextPage && !!hasNextPage', !isFetchingNextPage && !!hasNextPage);
 
   if (status !== 'success' && status !== 'error') {
     return (
@@ -86,31 +100,50 @@ const ChatMessages: FC<ChatMessagesProps> = ({
   }
 
   return (
-    <div className='flex-1 flex flex-col py-4 overflow-y-auto'>
-      <div className='flex-1'>
+    <div className='flex-1 flex flex-col py-4 overflow-y-auto' ref={chatRef}>
+      {!hasNextPage ? (
+        <div className='flex-1' />
+      ) : (null)}
+
+      {!hasNextPage ? (
         <ChatWelcome name={name} type={type} />
-        <div className='flex flex-col-reverse mt-auto'>
-          {data.pages.map((group, i) => (
-            <Fragment key={i}>
-              {group?.messages.map((message: MessageWithMemberWithProfile) => (
-                <ChatItem
-                  key={message.id}
-                  content={message.content}
-                  currentMember={member}
-                  deleted={message.deleted}
-                  fileUrl={message.fileUrl}
-                  id={message.id}
-                  isUpdated={message.updatedAt !== message.createdAt}
-                  member={message.member}
-                  socketQuery={socketQuery}
-                  socketUrl={socketUrl}
-                  timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                />
-              ))}
-            </Fragment>
-          ))}
+      ) : (null)}
+
+      {!hasNextPage ? (
+        <div className='flex justify-center'>
+          <Loader2 className='h-6 w-6 text-zinc-500 animate-spin my-4' />
         </div>
+      ) : (
+        <button
+          onClick={() => fetchNextPage()}
+          className='text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 text-xs my-4 dark:hover:text-zinc-300 transition'
+        >
+          Load previews messages
+        </button>
+      )}
+
+      <div className='flex flex-col-reverse mt-auto'>
+        {data.pages.map((group, i) => (
+          <Fragment key={i}>
+            {group?.messages.map((message: MessageWithMemberWithProfile) => (
+              <ChatItem
+                key={message.id}
+                content={message.content}
+                currentMember={member}
+                deleted={message.deleted}
+                fileUrl={message.fileUrl}
+                id={message.id}
+                isUpdated={message.updatedAt !== message.createdAt}
+                member={message.member}
+                socketQuery={socketQuery}
+                socketUrl={socketUrl}
+                timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
+              />
+            ))}
+          </Fragment>
+        ))}
       </div>
+      <div ref={bottomRef} />
     </div>
   );
 };
