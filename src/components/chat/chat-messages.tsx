@@ -7,7 +7,8 @@ import ChatWelcome from './chat-welcome';
 import { useChatQuery } from '@/hooks/use-chat-query';
 import { Loader2, ServerCrash } from 'lucide-react';
 import ChatItem from './chat-item';
-import { format } from 'date-fns';
+import { add, format } from 'date-fns';
+import { useChatSocket } from '@/hooks/use-chat-socket';
 
 const DATE_FORMAT = 'd MMM yyyy, HH:mm';
 
@@ -42,6 +43,8 @@ const ChatMessages: FC<ChatMessagesProps> = ({
 }) => {
 
   const queryKey = `chat:${chatId}`;
+  const addKey = `chat:${chatId}:messages`;
+  const updateKey = `chat:${chatId}:message:update`;
 
   const {
     data,
@@ -54,6 +57,12 @@ const ChatMessages: FC<ChatMessagesProps> = ({
     apiUrl,
     paramKey,
     paramValue,
+  });
+
+  useChatSocket({
+    addKey,
+    updateKey,
+    queryKey,
   });
 
   if (status !== 'success' && status !== 'error') {

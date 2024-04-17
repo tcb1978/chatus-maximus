@@ -19,6 +19,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ModalEnum, useModal } from '@/hooks/use-modal-store';
+import { useRouter, useParams } from 'next/navigation';
 
 interface ChatItemProps {
   id: string;
@@ -60,6 +61,16 @@ const ChatItem: FC<ChatItemProps> = ({
 }): JSX.Element => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const { onOpen } = useModal();
+  const params = useParams();
+  const router = useRouter();
+
+  const onMemberClick = () => {
+    if (member.id === currentMember.id) {
+      return;
+    }
+
+    router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: any) => {
@@ -118,12 +129,12 @@ const ChatItem: FC<ChatItemProps> = ({
   return (
     <div className='group flex items-center hover:bg-black/5 p-4 transition wi-full'>
       <div className='group flex gap-x-2 items-start w-full'>
-        <div className='cursor-pointer hover:drop-shadow-md transition w-8 h-8'>
+        <div onClick={onMemberClick} className='cursor-pointer hover:drop-shadow-md transition w-8 h-8'>
           <UserAvatar src={member.profile.imageUrl} />
         </div>
         <div className='flex flex-col items-start gap-x-2'>
           <div className='flex items-center'>
-            <p className='font-semibold text-sm hover:underline cursor-pointer'>
+            <p onClick={onMemberClick} className='font-semibold text-sm hover:underline cursor-pointer'>
               {member.profile.name}
             </p>
             <ActionTooltip label={member.role}>
