@@ -12,7 +12,7 @@ import DeleteChannelModal from '@/components/modals/delete-channel-modal';
 import EditChannelModal from '@/components/modals/edit-channel-modal';
 import MessageFileModal from '@/components/modals/message-file-modal';
 
-export const ModalProvider = () => {
+export const ModalProvider = (): JSX.Element | null => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {

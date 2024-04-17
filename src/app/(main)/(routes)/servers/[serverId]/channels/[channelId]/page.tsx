@@ -1,5 +1,6 @@
 import ChatHeader from '@/components/chat/chat-header';
 import ChatInput from '@/components/chat/chat-input';
+import ChatMessages from '@/components/chat/chat-messages';
 import { ChannelEnum } from '@/components/server/server-sidebar';
 import { currentProfile } from '@/lib/current-profile';
 import { db } from '@/lib/db';
@@ -52,15 +53,28 @@ const ChannelIdPage: FC<ChannelIdPageProps> = async ({
         serverId={channel.serverId}
         type={ChannelEnum.CHANNEL}
       />
-      <div className='flex-1'>Future Messages</div>
-      <ChatInput
-        apiUrl={`/api/socket/messages`}
+      <ChatMessages
         name={channel.name}
-        query={{
-          serverId,
-          channelId,
+        member={member}
+        chatId={channel.id}
+        apiUrl='/api/messages'
+        socketUrl='/api/socket/messages'
+        socketQuery={{
+          channelId: channel.id,
+          serverId: channel.serverId,
         }}
+        paramKey={ChannelEnum.CHANNELID}
+        paramValue={channel.id}
         type={ChannelEnum.CHANNEL}
+      />
+      <ChatInput
+        name={channel.name}
+        type={ChannelEnum.CHANNEL}
+        apiUrl={`/api/socket/messages`}
+        query={{
+          channelId: channel.id,
+          serverId: channel.serverId,
+        }}
       />
     </div>
   );

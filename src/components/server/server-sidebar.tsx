@@ -18,7 +18,9 @@ interface ServerSidebarProps {
 
 export enum ChannelEnum {
   CHANNEL = 'channel',
+  CHANNELID = 'channelId',
   CONVERSATION = 'conversation',
+  CONVERSATIONID = 'conversationId',
   MEMBER = 'member',
   TEXT = 'Text Channel',
   VOICE = 'Voice Channel',
