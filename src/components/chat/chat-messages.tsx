@@ -78,28 +78,29 @@ const ChatMessages: FC<ChatMessagesProps> = ({
 
   return (
     <div className='flex-1 flex flex-col py-4 overflow-y-auto'>
-      <div className='flex-1'></div>
-      <ChatWelcome name={name} type={type} />
-      <div className='flex flex-col-reverse mt-auto'>
-        {data.pages.map((group, i) => (
-          <Fragment key={i}>
-            {group?.messages.map((message: MessageWithMemberWithProfile) => (
-              <ChatItem
-                key={message.id}
-                id={message.id}
-                content={message.content}
-                member={message.member}
-                currentMember={member}
-                fileUrl={message.fileUrl}
-                deleted={message.deleted}
-                timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                isUpdated={message.updatedAt !== message.createdAt}
-                socketUrl={socketUrl}
-                socketQuery={socketQuery}
-              />
-            ))}
-          </Fragment>
-        ))}
+      <div className='flex-1'>
+        <ChatWelcome name={name} type={type} />
+        <div className='flex flex-col-reverse mt-auto'>
+          {data.pages.map((group, i) => (
+            <Fragment key={i}>
+              {group?.messages.map((message: MessageWithMemberWithProfile) => (
+                <ChatItem
+                  key={message.id}
+                  content={message.content}
+                  currentMember={member}
+                  deleted={message.deleted}
+                  fileUrl={message.fileUrl}
+                  id={message.id}
+                  isUpdated={message.updatedAt !== message.createdAt}
+                  member={message.member}
+                  socketQuery={socketQuery}
+                  socketUrl={socketUrl}
+                  timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
+                />
+              ))}
+            </Fragment>
+          ))}
+        </div>
       </div>
     </div>
   );

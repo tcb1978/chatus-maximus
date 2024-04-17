@@ -54,27 +54,27 @@ const ChannelIdPage: FC<ChannelIdPageProps> = async ({
         type={ChannelEnum.CHANNEL}
       />
       <ChatMessages
-        name={channel.name}
-        member={member}
-        chatId={channel.id}
         apiUrl='/api/messages'
-        socketUrl='/api/socket/messages'
+        chatId={channel.id}
+        member={member}
+        name={channel.name}
+        paramKey={ChannelEnum.CHANNELID}
+        paramValue={channel.id}
         socketQuery={{
           channelId: channel.id,
           serverId: channel.serverId,
         }}
-        paramKey={ChannelEnum.CHANNELID}
-        paramValue={channel.id}
+        socketUrl='/api/socket/messages'
         type={ChannelEnum.CHANNEL}
       />
       <ChatInput
-        name={channel.name}
-        type={ChannelEnum.CHANNEL}
         apiUrl={`/api/socket/messages`}
+        name={channel.name}
         query={{
           channelId: channel.id,
           serverId: channel.serverId,
         }}
+        type={ChannelEnum.CHANNEL}
       />
     </div>
   );
