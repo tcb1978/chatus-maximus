@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { ModalEnum, useModal } from '@/hooks/use-modal-store';
 
 interface ChatItemProps {
   id: string;
@@ -58,7 +59,7 @@ const ChatItem: FC<ChatItemProps> = ({
   socketQuery,
 }): JSX.Element => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const { onOpen } = useModal();
 
   useEffect(() => {
     const handleKeyDown = (event: any) => {
@@ -225,6 +226,10 @@ const ChatItem: FC<ChatItemProps> = ({
           ) : (null)}
           <ActionTooltip label='Delete'>
             <Trash
+              onClick={() => onOpen(ModalEnum.DeleteMessage, {
+                apiUrl: `${socketUrl}/${id}`,
+                query: socketQuery,
+              })}
               className='cursor-pointer ml-auto w-4 h-4 text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition'
             />
           </ActionTooltip>

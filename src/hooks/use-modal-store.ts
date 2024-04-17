@@ -13,6 +13,7 @@ export enum ModalEnum {
   DeleteChannel = 'deleteChannel',
   EditChannel = 'editChannel',
   MessageFile = 'messageFile',
+  DeleteMessage = 'deleteMessage',
 }
 
 export type ModalType =
@@ -26,7 +27,8 @@ export type ModalType =
   | ModalEnum.DeleteServer
   | ModalEnum.DeleteChannel
   | ModalEnum.EditChannel
-  | ModalEnum.MessageFile;
+  | ModalEnum.MessageFile
+  | ModalEnum.DeleteMessage;
 
 interface ModalData {
   server?: Server;
